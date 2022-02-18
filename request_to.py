@@ -1,6 +1,6 @@
 import requests
-
-auth_header = {"Authorization": f'Token token="84b0561d0adc0778f86f89ed63dbbee0"'}
+token = '84b0561d0adc0778f86f89ed63dbbee0'
+auth_header = {"Authorization": f'Token token={token}'}
 
 
 def post(login, password, email):
@@ -36,14 +36,14 @@ def create_session(login, password):
     }
 
     response = requests.post(r"https://favqs.com/api/session", json=data,
-                             headers={**auth_header})
+                             headers=auth_header)
 
     return response.json()
 
 
 def update_user(user_token, new_login, new_email):
     header = {"User-Token": f"{user_token}",
-              "Authorization": f'Token token={"84b0561d0adc0778f86f89ed63dbbee0"}'}
+              "Authorization": f'Token token={token}'}
 
     data = {
 
