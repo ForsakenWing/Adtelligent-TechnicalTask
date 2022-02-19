@@ -1,4 +1,5 @@
-from random import randint, choice
+from random import randint
+from secrets import choice
 from string import ascii_lowercase as as_low, digits as dig
 from string import ascii_letters as as_let, punctuation as punc
 

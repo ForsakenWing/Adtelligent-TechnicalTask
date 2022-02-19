@@ -1,9 +1,12 @@
 import requests
-token = '84b0561d0adc0778f86f89ed63dbbee0'
-auth_header = {"Authorization": f'Token token={token}'}
+
+
+auth_token = '84b0561d0adc0778f86f89ed63dbbee0'
+auth_header = {"Authorization": f'Token token={auth_token}'}
 
 
 def post(login, password, email):
+
     data = {
         "user": {
             "login": f"{login}",
@@ -13,21 +16,23 @@ def post(login, password, email):
     }
 
     response = requests.post(url=r"https://favqs.com/api/users", json=data,
-                             headers=auth_header)
+                             headers=auth_header).json()
 
-    return response.json()
+    return response
 
 
 def get(token):
-    header = {"User-Token": f"{token}"}
+
+    usr_token = {"User-Token": f"{token}"}
 
     response = requests.get(url=r"https://favqs.com/api/users/:login",
-                            headers={**auth_header, **header})
+                            headers={**auth_header, **usr_token})
 
     return response.json()
 
 
 def create_session(login, password):
+
     data = {
         "user": {
             "login": f"{login}",
@@ -42,8 +47,7 @@ def create_session(login, password):
 
 
 def update_user(user_token, new_login, new_email):
-    header = {"User-Token": f"{user_token}",
-              "Authorization": f'Token token={token}'}
+    header = {"User-Token": user_token}
 
     data = {
 
@@ -55,8 +59,8 @@ def update_user(user_token, new_login, new_email):
         }
     }
 
-    response = requests.get(url=r"https://favqs.com/api/users/:login",
-                            json=data, headers=header)
+    response = requests.put(url=r"https://favqs.com/api/users/:login",
+                            json=data, headers={**header, **auth_header})
 
     return response.json()
 
