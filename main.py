@@ -1,10 +1,9 @@
 from unittest import TestCase, main
-from request_to import post, get, update_user, destroy_session
-from user import User
+from Requests.request_to import post, get, update_user, destroy_session
+from user_data.user import User
 
 
 class Parent:
-
     new_user = User()
 
     data = post(new_user.login, new_user.password, new_user.email)
@@ -24,18 +23,19 @@ class Parent:
 class CreatingUserTest(TestCase, Parent):
 
     def test_registration(self):
-        self.assertEqual(self.new_user.login, self.response_login)
+        self.assertEqual(self.new_user.login,
+                         self.response_login)
 
         # Getting a bug/error (Email_name is automatically switching
         # to lowercase what called an error in Tests)
 
         # if we switch our email to lowercase == tests would pass
 
-        self.assertEqual(self.new_user.email.lower(), self.response_email)
+        self.assertEqual(self.new_user.email.lower(),
+                         self.response_email)
 
 
 class UpdatingUserTest(TestCase, Parent):
-
     new_user_data = User()
 
     updated_user_data = update_user(Parent.user_token,
