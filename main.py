@@ -18,6 +18,8 @@ class Parent:
     token = get_session.get('User-Token')
     # print(token)
 
+    print("checking for updates")
+
     # I didn`t find a key how to fix this bug with get_user_details function
 
     get_user_details = get(token)  # BUG/ERROR Getting an error "User not found"
