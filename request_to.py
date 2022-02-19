@@ -21,32 +21,18 @@ def post(login, password, email):
     return response
 
 
-def get(token):
+def get(token, login):
 
     usr_token = {"User-Token": f"{token}"}
 
-    response = requests.get(url=r"https://favqs.com/api/users/:login",
+    response = requests.get(url=rf"https://favqs.com/api/users/{login}",
                             headers={**auth_header, **usr_token})
 
     return response.json()
 
 
-def create_session(login, password):
+def update_user(user_token, new_login, new_email, old_login):
 
-    data = {
-        "user": {
-            "login": f"{login}",
-            "password": f"{password}"
-        }
-    }
-
-    response = requests.post(r"https://favqs.com/api/session", json=data,
-                             headers=auth_header)
-
-    return response.json()
-
-
-def update_user(user_token, new_login, new_email):
     header = {"User-Token": user_token}
 
     data = {
@@ -59,14 +45,15 @@ def update_user(user_token, new_login, new_email):
         }
     }
 
-    response = requests.put(url=r"https://favqs.com/api/users/:login",
+    response = requests.put(url=rf"https://favqs.com/api/users/{old_login}",
                             json=data, headers={**header, **auth_header})
 
     return response.json()
 
 
-def destroy_session():
+def destroy_session(token):
 
-    response = requests.delete("https://favqs.com/api/session", headers=auth_header)
+    response = requests.delete("https://favqs.com/api/session",
+                               headers={**auth_header, **{"User-Token": token}})
 
     return response.json()
